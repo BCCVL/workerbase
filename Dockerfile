@@ -11,8 +11,6 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     yum install -y R && \
     yum clean all
 
-RUN groupadd -g 415 bccvl && useradd -m -g bccvl -u 415 bccvl
-
 # Install everything biodiverse related
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
