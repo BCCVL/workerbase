@@ -39,6 +39,6 @@ COPY ./files/maxent.jar /opt/maxent/
 # Install R libs
 RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile
 COPY ./files/install_r_packages.sh /tmp/
-RUN /tmp/install_r_packages.sh
+RUN /bin/bash /tmp/install_r_packages.sh
 
 RUN ln -sf /usr/share/zoneinfo/Australia/Brisbane /etc/localtime
