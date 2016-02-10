@@ -158,5 +158,7 @@ R CMD INSTALL $TMPDIR/proto_0.3-10.tar.gz
 curl -o $TMPDIR/ggplot2_1.0.0.tar.gz http://mirror.aarnet.edu.au/pub/CRAN/src/contrib/Archive/ggplot2/ggplot2_1.0.0.tar.gz
 R CMD INSTALL $TMPDIR/ggplot2_1.0.0.tar.gz
 
+curl -o $TMPDIR/gridExtra_2.0.0.tar.gz http://mirror.aarnet.edu.au/pub/CRAN/src/contrib/gridExtra_2.0.0.tar.gz
+R CMD INSTALL $TMPDIR/gridExtra_2.0.0.tar.gz
 
 rm -rf $TMPDIR
