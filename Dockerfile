@@ -8,6 +8,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     yum install -y perl perl-CPAN gdal gdal-perl gdal-python gcc make expat-devel && \
     yum install -y proj proj-devel proj-epsg proj-nad geos geos-devel gdal-devel  && \
     yum install -y gcc-c++ libpng libpng-devel && \
+    yum install -y libcurl-devel openssl-devel && \
     yum install -y R && \
     yum clean all
 
