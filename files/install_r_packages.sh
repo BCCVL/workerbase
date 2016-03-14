@@ -10,7 +10,7 @@ repos['CRAN'] = 'http://cran.csiro.au'
 options(repos = repos)
 
 # require devtools for install_version command
-install.package('devtools')
+install.packages('devtools')
 require('devtools')
 
 # define list of packages to install
