@@ -5,7 +5,7 @@ MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 ENV LANG en_US.UTF-8
 
 RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-2.noarch.rpm && \
-    yum install -y perl perl-CPAN gdal gdal-perl gdal-python gcc make expat-devel && \
+    yum install -y perl perl-CPAN gdal gdal-perl gdal-python gcc make expat-devel patch && \
     yum install -y proj proj-devel proj-epsg proj-nad geos geos-devel gdal-devel  && \
     yum install -y gcc-c++ libpng libpng-devel && \
     yum install -y libcurl-devel openssl-devel && \
@@ -31,6 +31,8 @@ RUN set -x && \
     rm -rf /root/.cpanm
 
 RUN curl https://codeload.github.com/shawnlaffan/biodiverse/tar.gz/r1.0 | tar xvz -C /opt/
+COPY ./files/biodiverse-1.0-Readonly.patch /opt/
+RUN patch -d /opt/biodiverse-r1.0 -p 1 < /opt/biodiverse-1.0-Readonly.patch
 
 ENV PERL5LIB="/opt/biodiverse-r1.0/lib"
 
