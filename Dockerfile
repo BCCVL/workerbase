@@ -9,6 +9,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     yum install -y proj proj-devel proj-epsg proj-nad geos geos-devel gdal-devel  && \
     yum install -y gcc-c++ libpng libpng-devel && \
     yum install -y libcurl-devel openssl-devel && \
+    yum install dos2unix && \
     yum install -y R && \
     yum clean all
 
@@ -32,7 +33,9 @@ RUN set -x && \
 
 RUN curl https://codeload.github.com/shawnlaffan/biodiverse/tar.gz/r1.0 | tar xvz -C /opt/
 COPY ./files/biodiverse-1.0-Readonly.patch /opt/
-RUN patch -d /opt/biodiverse-r1.0 -p 1 < /opt/biodiverse-1.0-Readonly.patch
+RUN dos2unix /opt/biodiverse-r1.0/lib/Biodiverse/Metadata/Indices.pm && \
+    patch -d /opt/biodiverse-r1.0 -p 1 < /opt/biodiverse-1.0-Readonly.patch && \
+    unix2dos /opt/biodiverse-r1.0/lib/Biodiverse/Metadata/Indices.pm
 
 ENV PERL5LIB="/opt/biodiverse-r1.0/lib"
 
