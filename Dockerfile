@@ -40,7 +40,8 @@ RUN dos2unix /opt/biodiverse-r1.0/lib/Biodiverse/Metadata/Indices.pm && \
 ENV PERL5LIB="/opt/biodiverse-r1.0/lib"
 
 # install maxent
-COPY ./files/maxent.jar /opt/maxent/
+ENV MAXENT=/opt/maxent/maxent.jar
+COPY ./files/maxent.jar ${MAXENT}
 
 # Install R libs
 RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile
