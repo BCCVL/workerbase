@@ -17,7 +17,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
 # Install everything biodiverse related
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
-ENV PERL_MM_USE_DEFAULT=1 ... TODO: do I want this env var set globally? (or push into RUN)
+ENV PERL_MM_USE_DEFAULT=1
 
 RUN set -x && \
     cpan App::cpanminus && \
