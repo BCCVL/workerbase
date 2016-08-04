@@ -2,8 +2,9 @@ FROM hub.bccvl.org.au/centos/centos7-epel:2016-04-15
 
 MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 
-ENV LANG en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
+# TODO: can I get gdal2 here as well?
 RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-2.noarch.rpm && \
     yum install -y perl perl-CPAN gdal gdal-perl gdal-python gcc make expat-devel patch && \
     yum install -y proj proj-devel proj-epsg proj-nad geos geos-devel gdal-devel  && \
@@ -16,7 +17,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
 # Install everything biodiverse related
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
-ENV PERL_MM_USE_DEFAULT=1
+ENV PERL_MM_USE_DEFAULT=1 ... TODO: do I want this env var set globally? (or push into RUN)
 
 RUN set -x && \
     cpan App::cpanminus && \

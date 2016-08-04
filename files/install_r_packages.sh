@@ -1,9 +1,5 @@
 #! /usr/bin/env Rscript
 
-
-#TODO: requires yum install libcurl-devel openssl-devel (for devtools)
-
-
 # setup local mirror
 repos <- getOption('repos')
 repos['CRAN'] = 'http://cran.csiro.au'
@@ -38,7 +34,7 @@ pkglist = c(
     'deldir',       '0.1-9',
     'dichromat',    '2.0-0',
     'digest',       '0.6.9',
-    'dismo',        '1.0-15',
+    'dismo',        '1.1-1',
     'evaluate',     '0.8',
     'foreach',      '1.4.3',
     'foreign',      '0.8-66',
@@ -128,5 +124,3 @@ print_nobase_pkgs <- function() {
     }
     cat(paste(pkgstrings, sep=",\n"))
 }
-
-
