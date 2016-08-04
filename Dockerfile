@@ -24,7 +24,7 @@ RUN set -x && \
     cpanm YAML::Syck && \
     cpanm Getopt::Long::Descriptive && \
     cpanm JSON && \
-    cpanm Time::HiRes && \
+    cpanm Time::HiRes@1.9733 && \
     cpanm --force Object::InsideOut && \
     cpanm Math::Random::MT::Auto && \
     cpanm List::BinarySearch && \
