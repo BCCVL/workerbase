@@ -1,12 +1,12 @@
 FROM hub.bccvl.org.au/centos/centos7-epel:2017-02-20
 
+MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
+
 # configure pypi index to use
 ARG PIP_INDEX_URL
 ARG PIP_TRUSTED_HOST
 # If set, pip will look for pre releases
 ARG PIP_PRE
-
-MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 
 ENV LC_ALL=en_US.UTF-8
 
