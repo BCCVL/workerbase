@@ -1,4 +1,10 @@
-FROM hub.bccvl.org.au/centos/centos7-epel:2016-04-15
+FROM hub.bccvl.org.au/centos/centos7-epel:2017-02-20
+
+# configure pypi index to use
+ARG PIP_INDEX_URL
+ARG PIP_TRUSTED_HOST
+# If set, pip will look for pre releases
+ARG PIP_PRE
 
 MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 
@@ -48,3 +54,11 @@ COPY ./files/maxent.jar ${MAXENT}
 RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile
 COPY ./files/install_r_packages.sh /tmp/
 RUN /tmp/install_r_packages.sh
+
+export PIP_INDEX_URL=${PIP_INDEX_URL} && \
+    export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
+    export PIP_NO_CACHE_DIR=False && \
+    export PIP_PRE=${PIP_PRE} && \
+    easy_install pip && \
+    pip install --upgrade setuptools wheel virtualenv && \
+    pip install guscmversion
