@@ -1,31 +1,35 @@
-import java.text.SimpleDateFormat
-import java.util.Date
+node('docker') {
 
-node {
+    def imagename
+    def img
+
+    def INDEX_HOST = env.PIP_INDEX_HOST
+    def INDEX_URL = "http://${INDEX_HOST}:3141/bccvl/prod/+simple/"
+
     // fetch source
-    stage 'Checkout'
+    stage('Checkout') {
 
-    checkout scm
+        checkout scm
 
-    // copy maxent.jar into clone
-    sh "cp ${env.JENKINS_HOME}/maxent.jar ./files/"
+        // copy maxent.jar into clone
+        sh "cp ${env.JENKINS_HOME}/maxent.jar ./files/"
+
+    }
 
     // build image
-    stage 'Build'
+    stage('Build') {
 
-    def imagename = 'hub.bccvl.org.au/bccvl/workerbase'
-    def img = docker.build(imagename)
+        imagename = "hub.bccvl.org.au/bccvl/workerbase:${dateTag()}"
+        img = docker.build(imagename, '--pull --no-cache --build-arg PIP_INDEX_URL=${INDEX_URL} --build-arg PIP_TRUSTED_HOST=${INDEX_HOST} .')
+
+    }
 
     // publish image to registry
-    stage 'Publish'
+    stage('Publish') {
 
-    def imagetag = date()
-    img.push(imagetag)
+        img.push()
 
-    slackSend color: 'good', message: "New Image ${imagename}:${imagetag}\n${env.JOB_URL}"
-}
+        slackSend color: 'good', message: "New Image ${imagename}\n${env.JOB_URL}"
 
-@NonCPS
-def date() {
-    return new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+    }
 }
