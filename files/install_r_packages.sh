@@ -1,14 +1,7 @@
 #! /usr/bin/env Rscript
 
-# setup local mirror
-repos <- getOption('repos')
-repos['CRAN'] = 'http://cran.csiro.au'
-options(repos = repos)
-
 # require devtools for install_version command
 install.packages('devtools')  # install devtools and all it's dependencies
-# devtools 1.11 is buggy and can't download specific versions from archive (had to do the previous step to get deps in)
-#install.packages("http://mirror.aarnet.edu.au/pub/CRAN/src/contrib/Archive/devtools/devtools_1.10.0.tar.gz", repos=NULL)
 require('devtools')
 
 # define list of packages to install
@@ -93,7 +86,7 @@ install_package <- function(pkg) {
             return;
         }
     }
-    install_version(package=pkg['pkg'], version=pkg['ver'])
+    install_version(package=pkg['pkg'], version=pkg['ver'], INSTALL_opts=c('--no-html', '--no-docs', '--clean'))
 }
 
 # create package matrix and install packages
