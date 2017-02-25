@@ -58,7 +58,7 @@ RUN set -x && \
 
 # patch biodiverse
 COPY ./files/biodiverse-1.0-Readonly.patch /opt/
-RUN curl https://codeload.github.com/shawnlaffan/biodiverse/tar.gz/r1.0 | tar xvz -C /opt/ \
+RUN curl https://codeload.github.com/shawnlaffan/biodiverse/tar.gz/r1.0 | tar xvz -C /opt/ && \
     dos2unix /opt/biodiverse-r1.0/lib/Biodiverse/Metadata/Indices.pm && \
     patch -d /opt/biodiverse-r1.0 -p 1 < /opt/biodiverse-1.0-Readonly.patch && \
     unix2dos /opt/biodiverse-r1.0/lib/Biodiverse/Metadata/Indices.pm
