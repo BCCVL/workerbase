@@ -11,8 +11,8 @@ node('docker') {
 
         checkout scm
 
-        // copy maxent.jar into clone
-        sh "cp ${env.JENKINS_HOME}/maxent.jar ./files/"
+        // fetch makent.jar from swift
+        swiftDownload('maxent/maxent-3.3.3k.jar', './files/maxent.jar', 'SwiftTmpKey')
 
     }
 
@@ -20,14 +20,18 @@ node('docker') {
     stage('Build') {
 
         imagename = "hub.bccvl.org.au/bccvl/workerbase:${dateTag()}"
-        img = docker.build(imagename, "--pull --no-cache --build-arg PIP_INDEX_URL=${INDEX_URL} --build-arg PIP_TRUSTED_HOST=${INDEX_HOST} . ")
 
+        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvlorg.au') {
+            img = docker.build(imagename, "--pull --no-cache --build-arg PIP_INDEX_URL=${INDEX_URL} --build-arg PIP_TRUSTED_HOST=${INDEX_HOST} . ")
+        }
     }
 
     // publish image to registry
     stage('Publish') {
 
-        img.push()
+        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvlorg.au') {
+            img.push()
+        }
 
         slackSend color: 'good', message: "New Image ${imagename}\n${env.JOB_URL}"
 
