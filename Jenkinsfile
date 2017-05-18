@@ -21,7 +21,7 @@ node('docker') {
 
         imagename = "hub.bccvl.org.au/bccvl/workerbase:${dateTag()}"
 
-        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvlorg.au') {
+        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvl.org.au') {
             img = docker.build(imagename, "--pull --no-cache --build-arg PIP_INDEX_URL=${INDEX_URL} --build-arg PIP_TRUSTED_HOST=${INDEX_HOST} . ")
         }
     }
