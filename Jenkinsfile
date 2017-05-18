@@ -30,7 +30,7 @@ node('docker') {
     // publish image to registry
     stage('Publish') {
 
-        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvlorg.au') {
+        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvl.org.au') {
             img.push()
         }
 
