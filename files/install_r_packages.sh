@@ -53,7 +53,7 @@ pkglist = c(
     'intervals',     '0.15.1',
     'iterators',     '1.0.8',
     'labeling',      '0.3',
-    'lacyeval',      '0.2.0',
+    'lazyeval',      '0.2.0',
     'lattice',       '0.20-33',
     'latticeExtra',  '0.6-28',
     'lme4',          '1.1-11',
