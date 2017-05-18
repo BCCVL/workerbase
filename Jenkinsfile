@@ -3,9 +3,6 @@ node('docker') {
     def imagename
     def img
 
-    def INDEX_HOST = env.PIP_INDEX_HOST
-    def INDEX_URL = "http://${INDEX_HOST}:3141/bccvl/prod/+simple/"
-
     // fetch source
     stage('Checkout') {
 
@@ -21,9 +18,13 @@ node('docker') {
 
         imagename = "hub.bccvl.org.au/bccvl/workerbase:${dateTag()}"
 
-        docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvl.org.au') {
-            img = docker.build(imagename, "--pull --no-cache --build-arg PIP_INDEX_URL=${INDEX_URL} --build-arg PIP_TRUSTED_HOST=${INDEX_HOST} . ")
+        withCredentials([string(credentialsId: 'pypi_index_url_prod', variable: 'PYPI_INDEX_URL')]) {
+
+            docker.withRegistry('https://hub.bccvl.org.au', 'hub.bccvl.org.au') {
+                img = docker.build(imagename, "--pull --no-cache --build-arg PIP_INDEX_URL=${PYPI_INDEX_URL} . ")
+            }
         }
+
     }
 
     // publish image to registry
