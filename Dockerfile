@@ -71,7 +71,9 @@ COPY ./files/maxent.jar ${MAXENT}
 
 # Install R libs
 COPY ./files/install_r_packages.sh /tmp/
-RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile && \
+#RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile && \
+#    /tmp/install_r_packages.sh
+RUN echo 'options(repos=structure(c(CRAN="https://cran.csiro.au/")))' >> /root/.RProfile && \
     /tmp/install_r_packages.sh
 
 # install python pkgs and update setupttols, pip etc...
