@@ -19,10 +19,6 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     gcc-c++ \
     geos \
     geos-devel \
-    gdal \
-    gdal-devel \
-    gdal-perl \
-    gdal-python \
     libcurl-devel \
     libpng \
     libpng-devel \
@@ -36,6 +32,67 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     proj-nad \
     R \
     && yum clean all
+
+# install python pkgs and update setupttols, pip etc...
+RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
+    export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
+    export PIP_NO_CACHE_DIR=False && \
+    export PIP_PRE=${PIP_PRE} && \
+    easy_install pip && \
+    pip install --upgrade setuptools wheel virtualenv && \
+    pip install guscmversion
+
+# Manually Install GDAL and newer version of numpy
+# libarmadillo adds a a number of dependencies: arpack-devel, atlas-devel, blas-devel, lapack-devel, libquadmath-devel, gcc-fortran
+RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
+    export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
+    export PIP_NO_CACHE_DIR=False && \
+    export PIP_PRE=${PIP_PRE} && \
+    export GDAL_VERSION="2.2.0" && \
+    pip install --no-cache-dir numpy cryptography && \
+    `# install build edpendencies:` && \
+    yum install -y \
+        make \
+        qhull \
+        hdf \
+        crytpopp && \
+
+    buildDeps='hdf5-devel \
+               libcurl-devel \
+               geos-devel \
+               xerces-c-devel \
+               expat-devel \
+               jasper-devel \
+               hdf-devel \
+               libgta-devel \
+               sqlite-devel \
+               armadillo-devel \
+               cryptopp-devel \
+               cfitsio-devel \
+               poppler-devel \
+               netcdf-devel \
+               libdap-devel \
+               json-c-devel \
+               qhull-devel \
+    ' && \
+
+    yum install -y $buildDeps && \
+
+    cd /tmp && \
+    curl http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz | tar -xz && \
+    cd gdal-${GDAL_VERSION} && \
+    ./configure --with-armadillo --with-poppler --with-epsilon --with-webp --with-cfitsio --with-liblzma=yes --with-dods-root=/usr && \
+    make -j 4 && \
+    make install && \
+    cd .. && \
+
+    `# make sure library paths are set up correctly` && \
+    echo -e '/usr/local/lib\n/usr/local/lib64' > /etc/ld.so.conf.d/local.conf && \
+    ldconfig && \
+    rm -fr gdal-${GDAL_VERSION} && \
+    pip install --no-cache-dir gdal==${GDAL_VERSION} && \
+    yum remove -y $buildDeps && \
+    yum clean all
 
 
 # Install everything biodiverse related
@@ -53,6 +110,7 @@ RUN set -x && \
     cpanm Math::Random::MT::Auto && \
     cpanm List::BinarySearch && \
     cpanm List::BinarySearch::XS && \
+    cpanm Geo::GDAL && \
     cpanm Task::Biodiverse::NoGUI && \
     rm -rf /root/.cpanm
 
@@ -75,12 +133,3 @@ COPY ./files/install_r_packages.sh /tmp/
 #    /tmp/install_r_packages.sh
 RUN echo 'options(repos=structure(c(CRAN="https://cran.csiro.au")))' >> /root/.Rprofile && \
     /tmp/install_r_packages.sh
-
-# install python pkgs and update setupttols, pip etc...
-RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
-    export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
-    export PIP_NO_CACHE_DIR=False && \
-    export PIP_PRE=${PIP_PRE} && \
-    easy_install pip && \
-    pip install --upgrade setuptools wheel virtualenv && \
-    pip install guscmversion
