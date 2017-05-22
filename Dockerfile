@@ -32,7 +32,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     proj-nad \
     R \
     && yum clean all \
-    && curl https://bootstrap.pypa.io/get-pip.py | sudo python -
+    && curl https://bootstrap.pypa.io/get-pip.py | python -
 
 # Manually Install GDAL and newer version of numpy
 # libarmadillo adds a a number of dependencies: arpack-devel, atlas-devel, blas-devel, lapack-devel, libquadmath-devel, gcc-fortran
