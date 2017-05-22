@@ -30,6 +30,7 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     proj proj-devel \
     proj-epsg \
     proj-nad \
+    python-devel \
     R \
     && yum clean all \
     && curl https://bootstrap.pypa.io/get-pip.py | python -
