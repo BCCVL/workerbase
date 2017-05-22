@@ -41,7 +41,7 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
     export PIP_NO_CACHE_DIR=False && \
     export PIP_PRE=${PIP_PRE} && \
     export GDAL_VERSION="2.2.0" && \
-    pip install --no-cache-dir guscmversion numpy cryptography && \
+    pip install --no-cache-dir guscmversion numpy && \
     `# install build edpendencies:` && \
     yum install -y \
         make \
