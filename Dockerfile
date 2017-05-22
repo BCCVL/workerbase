@@ -93,6 +93,8 @@ COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
 ENV PERL_MM_USE_DEFAULT=1
 
+# TODO: there is a problem with the tests in Geo::GDAL-2.010301 ...
+#       it has been fixed upstream but not released yet.
 RUN set -x && \
     cpan App::cpanminus && \
     cpanm YAML::Syck && \
@@ -103,7 +105,7 @@ RUN set -x && \
     cpanm Math::Random::MT::Auto && \
     cpanm List::BinarySearch && \
     cpanm List::BinarySearch::XS && \
-    cpanm Geo::GDAL && \
+    cpanm --force Geo::GDAL && \
     cpanm Task::Biodiverse::NoGUI && \
     rm -rf /root/.cpanm
 
