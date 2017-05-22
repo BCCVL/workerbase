@@ -1,4 +1,4 @@
-FROM hub.bccvl.org.au/centos/centos7-epel:2017-02-20
+FROM hub.bccvl.org.au/centos/centos7-epel:2017-05-22
 
 MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 
@@ -31,16 +31,8 @@ RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-cento
     proj-epsg \
     proj-nad \
     R \
-    && yum clean all
-
-# install python pkgs and update setupttols, pip etc...
-RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
-    export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
-    export PIP_NO_CACHE_DIR=False && \
-    export PIP_PRE=${PIP_PRE} && \
-    easy_install pip && \
-    pip install --upgrade setuptools wheel virtualenv && \
-    pip install guscmversion
+    && yum clean all \
+    && curl https://bootstrap.pypa.io/get-pip.py | sudo python -
 
 # Manually Install GDAL and newer version of numpy
 # libarmadillo adds a a number of dependencies: arpack-devel, atlas-devel, blas-devel, lapack-devel, libquadmath-devel, gcc-fortran
@@ -49,7 +41,7 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
     export PIP_NO_CACHE_DIR=False && \
     export PIP_PRE=${PIP_PRE} && \
     export GDAL_VERSION="2.2.0" && \
-    pip install --no-cache-dir numpy cryptography && \
+    pip install --no-cache-dir guscmversion numpy cryptography && \
     `# install build edpendencies:` && \
     yum install -y \
         make \
