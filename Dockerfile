@@ -130,5 +130,10 @@ COPY ./files/maxent.jar ${MAXENT}
 COPY ./files/install_r_packages.sh /tmp/
 #RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile && \
 #    /tmp/install_r_packages.sh
-RUN echo 'options(repos=structure(c(CRAN="https://cran.csiro.au")))' >> /root/.Rprofile && \
+RUN yum install -y \
+        R-devel \
+        libcurl-devel \
+        libgeos-devel \
+        libssh2-devel && \
+    echo 'options(repos=structure(c(CRAN="https://cran.csiro.au")))' >> /root/.Rprofile && \
     /tmp/install_r_packages.sh
