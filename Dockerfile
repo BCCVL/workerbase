@@ -96,6 +96,8 @@ ENV PERL_MM_USE_DEFAULT=1
 # TODO: there is a problem with the tests in Geo::GDAL-2.010301 ...
 #       it has been fixed upstream but not released yet.
 RUN set -x && \
+    buildDeps='expat-devel' && \
+    yum install -y $buildDeps && \
     cpan App::cpanminus && \
     cpanm YAML::Syck && \
     cpanm Getopt::Long::Descriptive && \
@@ -107,7 +109,9 @@ RUN set -x && \
     cpanm List::BinarySearch::XS && \
     cpanm --force Geo::GDAL && \
     cpanm Task::Biodiverse::NoGUI && \
-    rm -rf /root/.cpanm
+    rm -rf /root/.cpanm && \
+    yum remove -y $buildDeps && \
+    yum clean all
 
 # patch biodiverse
 COPY ./files/biodiverse-1.0-Readonly.patch /opt/
