@@ -133,7 +133,7 @@ COPY ./files/install_r_packages.sh /tmp/
 RUN yum install -y \
         R-devel \
         libcurl-devel \
-        libgeos-devel \
+        geos-devel \
         libssh2-devel && \
     echo 'options(repos=structure(c(CRAN="https://cran.csiro.au")))' >> /root/.Rprofile && \
     /tmp/install_r_packages.sh
