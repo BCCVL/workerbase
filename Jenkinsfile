@@ -9,7 +9,7 @@ node('docker') {
         checkout scm
 
         // fetch makent.jar from swift
-        swiftDownload('maxent/maxent-3.3.3k.jar', './files/maxent.jar', 'SwiftTmpKey')
+        swiftDownload('/maxent/maxent-3.3.3k.jar', './files/maxent.jar', 'SwiftTmpKey')
 
     }
 
