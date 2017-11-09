@@ -1,4 +1,4 @@
-FROM hub.bccvl.org.au/centos/centos7-epel:2017-05-22
+FROM hub.bccvl.org.au/centos/centos7-epel:2017-10-16
 
 MAINTAINER Jan Hettenhausen <j.hettenhausen@griffith.edu.au>
 
