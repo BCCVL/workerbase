@@ -11,7 +11,7 @@ ARG PIP_PRE
 ENV LC_ALL=en_US.UTF-8
 
 # TODO: can I get gdal2 here as well?
-RUN yum install -y http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/pgdg-centos95-9.5-2.noarch.rpm \
+RUN yum install -y http://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm \
     && yum install -y \
     dos2unix \
     expat-devel \
@@ -41,7 +41,7 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} && \
     export PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST} && \
     export PIP_NO_CACHE_DIR=False && \
     export PIP_PRE=${PIP_PRE} && \
-    export GDAL_VERSION="2.2.0" && \
+    export GDAL_VERSION="2.2.3" && \
     pip install --no-cache-dir virtualenv guscmversion numpy && \
     `# install build edpendencies:` && \
     yum install -y \
