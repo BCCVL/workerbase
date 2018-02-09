@@ -111,7 +111,7 @@ RUN set -x \
 
 # install maxent
 ENV MAXENT=/opt/maxent/maxent.jar
-COPY ./files/maxent-3.4.1.jar ${MAXENT}
+COPY ./files/maxent.jar ${MAXENT}
 
 # Install R libs
 COPY ./files/install_r_packages.sh /tmp/
