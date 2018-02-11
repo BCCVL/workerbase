@@ -108,7 +108,7 @@ RUN set -x \
  && cpanm Task::Biodiverse::NoGUI \
  && cpanm IO::Socket::SSL \
  && cpanm Panda::Lib \
- && cpanm http://www.biodiverse.unsw.edu.au/downloads/Biodiverse-Utils-1.06.tar.gz
+ && cpanm http://www.biodiverse.unsw.edu.au/downloads/Biodiverse-Utils-1.06.tar.gz \
  && cd /tmp \
  && curl -LO https://github.com/shawnlaffan/biodiverse/archive/${BIODIVERSE_VERSION}.tar.gz \
  && tar xzf ${BIODIVERSE_VERSION}.tar.gz \
@@ -124,9 +124,9 @@ ENV MAXENT=/opt/maxent/maxent.jar
 COPY ./files/maxent.jar ${MAXENT}
 
 # Install R libs
+# alternative CRAN mirror  http://mirror.aarnet.edu.au/pub/CRAN
 COPY ./files/install_r_packages.sh /tmp/
-#RUN echo 'options(repos=structure(c(CRAN="http://mirror.aarnet.edu.au/pub/CRAN")))' >> /root/.Rprofile && \
-#    /tmp/install_r_packages.sh
+
 RUN yum install -y \
         R-devel \
         libcurl-devel \
