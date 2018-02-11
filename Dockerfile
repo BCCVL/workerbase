@@ -87,7 +87,8 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} \
 # Install everything biodiverse related
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
-ENV PERL_MM_USE_DEFAULT=1
+ENV PERL_MM_USE_DEFAULT=1 \
+    BIODIVERSE_VERSION=r2.00
 
 # TODO: there is a problem with the tests in Geo::GDAL-2.010301 ...
 #       it has been fixed upstream but not released yet.
@@ -105,6 +106,15 @@ RUN set -x \
  && cpanm List::BinarySearch::XS \
  && cpanm --force Geo::GDAL \
  && cpanm Task::Biodiverse::NoGUI \
+ && cpanm IO::Socket::SSL \
+ && cpanm Panda::Lib
+ && cpanm http://www.biodiverse.unsw.edu.au/downloads/Biodiverse-Utils-1.06.tar.gz
+ && cd /tmp \
+ && curl -LO https://github.com/shawnlaffan/biodiverse/archive/${BIODIVERSE_VERSION}.tar.gz \
+ && tar xzf ${BIODIVERSE_VERSION}.tar.gz \
+ && cp -rf biodiverse-${BIODIVERSE_VERSION}/lib/{App,Biodiverse,BiodiverseX} /usr/local/lib64/perl5/ \
+ && rm -fr biodiverse-${BIODIVERSE_VERSION} \
+ && rm -fr ${BIODIVERSE_VERSION}.tar.gz \
  && rm -rf /root/.cpanm \
  && yum remove -y $buildDeps \
  && yum clean all
