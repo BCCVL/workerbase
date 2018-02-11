@@ -107,7 +107,7 @@ RUN set -x \
  && cpanm --force Geo::GDAL \
  && cpanm Task::Biodiverse::NoGUI \
  && cpanm IO::Socket::SSL \
- && cpanm Panda::Lib
+ && cpanm Panda::Lib \
  && cpanm http://www.biodiverse.unsw.edu.au/downloads/Biodiverse-Utils-1.06.tar.gz
  && cd /tmp \
  && curl -LO https://github.com/shawnlaffan/biodiverse/archive/${BIODIVERSE_VERSION}.tar.gz \
