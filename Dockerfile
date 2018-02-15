@@ -88,7 +88,7 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} \
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
 ENV PERL_MM_USE_DEFAULT=1 \
-    BIODIVERSE_VERSION=r2.00
+    BIODIVERSE_VERSION=r1.1
 
 # TODO: there is a problem with the tests in Geo::GDAL-2.010301 ...
 #       it has been fixed upstream but not released yet.
