@@ -110,7 +110,7 @@ RUN set -x \
  && cd /tmp \
  && curl -LO https://github.com/shawnlaffan/biodiverse/archive/${BIODIVERSE_VERSION}.tar.gz \
  && tar xzf ${BIODIVERSE_VERSION}.tar.gz \
- && cp -rf biodiverse-${BIODIVERSE_VERSION}/lib/{App,Biodiverse,BiodiverseX} /usr/local/lib64/perl5/ \
+ && cp -rf biodiverse-${BIODIVERSE_VERSION}/lib/{App,Biodiverse} /usr/local/lib64/perl5/ \
  && rm -fr biodiverse-${BIODIVERSE_VERSION} \
  && rm -fr ${BIODIVERSE_VERSION}.tar.gz \
  && rm -rf /root/.cpanm \
