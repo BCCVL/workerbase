@@ -88,7 +88,8 @@ RUN export PIP_INDEX_URL=${PIP_INDEX_URL} \
 COPY ./files/MyConfig.pm /root/.cpan/CPAN/
 
 ENV PERL_MM_USE_DEFAULT=1 \
-    BIODIVERSE_VERSION=r1.1
+    BIODIVERSE_VERSION=r1.1 \
+    BIODIVERSE_NOGUI=1.10002
 
 # TODO: there is a problem with the tests in Geo::GDAL-2.010301 ...
 #       it has been fixed upstream but not released yet.
@@ -105,7 +106,7 @@ RUN set -x \
  && cpanm List::BinarySearch \
  && cpanm List::BinarySearch::XS \
  && cpanm --force Geo::GDAL \
- && cpanm Task::Biodiverse::NoGUI \
+ && cpanm Task::Biodiverse::NoGUI@${BIODIVERSE_NOGUI} \
  && cpanm http://www.biodiverse.unsw.edu.au/downloads/Biodiverse-Utils-1.06.tar.gz \
  && cd /tmp \
  && curl -LO https://github.com/shawnlaffan/biodiverse/archive/${BIODIVERSE_VERSION}.tar.gz \
@@ -116,6 +117,10 @@ RUN set -x \
  && rm -rf /root/.cpanm \
  && yum remove -y $buildDeps \
  && yum clean all
+
+# Patch some biodiverse files ... 'Invalid initialisation by assignment'
+# only required for biodiverse 1.1?
+RUN sed -i'' -e 's/^\(Readonly.*\)\( = \)\(.*\)$/\1 => \3/g' /usr/local/lib64/perl5/Biodiverse/Metadata/Indices.pm
 
 # install maxent
 ENV MAXENT=/opt/maxent/maxent.jar
