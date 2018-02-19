@@ -120,7 +120,7 @@ RUN set -x \
 
 # Patch some biodiverse files ... 'Invalid initialisation by assignment'
 # only required for biodiverse 1.1?
-RUN sed -i'' -e 's/^\(Readonly.*\)\( = \)\(.*\)$/\1 => \3/g' /usr/local/lib64/perl5/Biodiverse/Metadata/Indices.pm /usr/local/lib64/perl5/Biodiverse/Metadata/Extract.pm
+RUN sed -i'' -e 's/^\(Readonly.*\)\( = \)\(.*\)$/\1 => \3/g' /usr/local/lib64/perl5/Biodiverse/Metadata/Indices.pm /usr/local/lib64/perl5/Biodiverse/Metadata/Export.pm
 
 # install maxent
 ENV MAXENT=/opt/maxent/maxent.jar
